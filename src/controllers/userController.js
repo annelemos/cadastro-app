@@ -1,4 +1,4 @@
-import { criarUsuario } from "../models/userModel.js";
+import { criarUsuario, listarUsuarios} from "../models/userModel.js";
 
 async function cadastrarUsuario(req,res) {
     const {nome,email,senha} = req.body;
@@ -11,4 +11,14 @@ async function cadastrarUsuario(req,res) {
     return 
 }
 
-export { cadastrarUsuario };
+async function listarUsuariosController(req,res) {
+    try{
+        const resultado = await listarUsuarios();
+        res.status(200).json ({ usuarios: resultado});
+    }catch(erro){
+        res.status(500).json({mensagem: "Falha ao carregar a lista de usuários.", erro: erro.message});
+    }
+    return
+}
+
+export { cadastrarUsuario, listarUsuariosController };
