@@ -10,4 +10,9 @@ async function criarUsuario(nome, email, senha) {
     return resultado;
 };
 
-export { criarUsuario };
+async function listarUsuarios () {
+    const  resultado = await conexao.query('SELECT * FROM usuarios');
+    return resultado.rows;
+}
+
+export { criarUsuario, listarUsuarios };
