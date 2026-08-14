@@ -26,7 +26,7 @@ async function editarUsuariosController(req,res) {
     const id = req.params.id;
     try{
         const resultado = await editarUsuario(nome,email,senha,id);
-        res.status(200).json({usuarios: resultado});
+        res.status(200).json({ mensagem: "Usuário atualizado com sucesso" });
 
     }catch(erro){
         res.status(400).json({mensagem: "Falha ao editar as configurações deste usuário.", erro: erro.message});
