@@ -8,7 +8,7 @@ async function criarUsuario(nome, email, senha) {
     const resultado = await conexao.query(query,[nome, email, senha]);
     
     return resultado;
-};
+}
 
 async function listarUsuarios () {
     const  resultado = await conexao.query('SELECT * FROM usuarios');
@@ -22,4 +22,12 @@ async function editarUsuario(nome,email,senha,id) {
     return resultado;
 }
 
-export { criarUsuario, listarUsuarios, editarUsuario };
+async function deletarUsuario(id) {
+    const query = `
+    DELETE FROM usuarios WHERE id = $1
+    `;
+    const resultado = await conexao.query(query,[id]);
+    return resultado;
+}
+
+export { criarUsuario, listarUsuarios, editarUsuario, deletarUsuario };
