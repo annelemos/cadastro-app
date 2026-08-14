@@ -1,4 +1,4 @@
-import { criarUsuario, listarUsuarios} from "../models/userModel.js";
+import { criarUsuario, listarUsuarios, editarUsuario, deletarUsuario} from "../models/userModel.js";
 
 async function cadastrarUsuario(req,res) {
     const {nome,email,senha} = req.body;
@@ -21,4 +21,29 @@ async function listarUsuariosController(req,res) {
     return
 }
 
-export { cadastrarUsuario, listarUsuariosController };
+async function editarUsuariosController(req,res) {
+    const {nome,email,senha} = req.body;
+    const id = req.params.id;
+    try{
+        const resultado = await editarUsuario(nome,email,senha,id);
+        res.status(200).json({usuarios: resultado});
+
+    }catch(erro){
+        res.status(400).json({mensagem: "Falha ao editar as configurações deste usuário.", erro: erro.message});
+    }
+    return
+}
+
+async function deletarUsuarioController(req,res) {
+    const id = req.params.id;
+    try{
+        const resultado = await deletarUsuario(id);
+        res.status(200).json({mensagem: "Usuário removido com sucesso!"});
+    }catch(erro){
+        res.status(500).json({mensagem: "Falha ao remover usuário.", erro: erro.message});
+    }
+    return
+}
+
+
+export { cadastrarUsuario, listarUsuariosController, editarUsuariosController, deletarUsuarioController };
