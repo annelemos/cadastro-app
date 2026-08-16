@@ -1,9 +1,11 @@
 import { criarUsuario, listarUsuarios, editarUsuario, deletarUsuario} from "../models/userModel.js";
+import bcrypt from "bcrypt";
 
 async function cadastrarUsuario(req,res) {
     const {nome,email,senha} = req.body;
     try{
-        const resultado = await criarUsuario(nome, email, senha);
+        const senhaHash = await bcrypt.hash(senha, 10);
+        const resultado = await criarUsuario(nome, email, senhaHash);
         res.status(201).json({ mensagem: "Usuário criado com sucesso" })
     }catch(erro){
         res.status(400).json({ mensagem: "Falha ao tentar criar novo usuário", erro: erro.message });
