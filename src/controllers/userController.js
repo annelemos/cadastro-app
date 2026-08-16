@@ -3,6 +3,11 @@ import bcrypt from "bcrypt";
 
 async function cadastrarUsuario(req,res) {
     const {nome,email,senha} = req.body;
+
+    if (!nome || !email || !senha) {
+    return res.status(400).json({ mensagem: "Todos os campos são obrigatórios" });
+    }
+
     try{
         const senhaHash = await bcrypt.hash(senha, 10);
         const resultado = await criarUsuario(nome, email, senhaHash);
@@ -26,6 +31,11 @@ async function listarUsuariosController(req,res) {
 async function editarUsuariosController(req,res) {
     const {nome,email,senha} = req.body;
     const id = req.params.id;
+
+    if (!nome || !email || !senha) {
+    return res.status(400).json({ mensagem: "Todos os campos são obrigatórios" });
+    }
+    
     try{
         const senhaHash = await bcrypt.hash(senha, 10);
         const resultado = await editarUsuario(nome,email,senhaHash,id);
