@@ -9,11 +9,13 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nome, email, senha })
+        body: JSON.stringify({ nome, email, senha }),
     });
 
     const dados = await resposta.json();
+    document.getElementById('mensagemFeedback').textContent = dados.mensagem;
     console.log(dados);
+    document.getElementById('formCadastro').reset();
 });
 
 
