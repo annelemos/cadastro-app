@@ -27,7 +27,8 @@ async function editarUsuariosController(req,res) {
     const {nome,email,senha} = req.body;
     const id = req.params.id;
     try{
-        const resultado = await editarUsuario(nome,email,senha,id);
+        const senhaHash = await bcrypt.hash(senha, 10);
+        const resultado = await editarUsuario(nome,email,senhaHash,id);
         res.status(200).json({ mensagem: "Usuário atualizado com sucesso" });
 
     }catch(erro){
